@@ -491,6 +491,28 @@
   .prose p strong,.dm-description p strong{color:#f5e6c8;font-weight:600;display:block;margin-bottom:6px;font-size:1.05rem;letter-spacing:.02em}
   .prose p strong.inline,.dm-description p strong.inline{display:inline;margin-bottom:0;font-size:inherit;letter-spacing:inherit}
 
+  /* ============================================================
+     COLLAPSIBLE READING (key points first, then more)
+     ============================================================ */
+  .prose-rest{display:none;margin-top:6px;animation:fadeInUp .4s ease}
+  .prose.expanded .prose-rest{display:block}
+  .prose.expanded .read-more{display:none}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+  .read-more{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(212,175,55,.08);
+    border:1px solid rgba(212,175,55,.35);
+    color:#d4af37;padding:9px 18px;border-radius:20px;
+    font-size:.85em;font-family:inherit;letter-spacing:.05em;
+    cursor:pointer;margin:4px 0 14px;
+    transition:all .2s ease;
+  }
+  .read-more:hover{background:rgba(212,175,55,.15);border-color:#d4af37;transform:translateY(-1px)}
+  .read-more:active{transform:translateY(0)}
+  .rm-arrow{display:inline-block;transition:transform .3s ease;font-size:.9em}
+  .prose.expanded .rm-arrow{transform:rotate(180deg)}
+  .read-more-meta{font-size:.78em;color:#8a7556;letter-spacing:.1em;text-transform:uppercase;margin-left:6px;opacity:.8}
+
   /* Section Cards */
   .section-card{
     background:linear-gradient(180deg,rgba(20,16,30,.5),rgba(10,8,18,.5));
@@ -1211,6 +1233,30 @@ function analyzeElements(counts) {
 const elResult = document.getElementById('result');
 const elForm = document.getElementById('saju-form');
 
+/* ============================================================
+   COLLAPSIBLE READING (key points first, then read more)
+   ============================================================ */
+function makeCollapsible(html) {
+  // Split off the first <p>...</p> block; wrap the rest in a hidden container
+  // and insert a "Continue reading" button between them.
+  const m = String(html).match(/^([\s\S]*?<\/p>)\s*([\s\S]*)$/);
+  if (!m) return html;
+  const rest = m[2].trim();
+  if (!rest) return html; // single paragraph, nothing to collapse
+  return `${m[1]}<button type="button" class="read-more" aria-expanded="false">Continue reading <span class="rm-arrow" aria-hidden="true">↓</span></button><div class="prose-rest">${m[2]}</div>`;
+}
+
+// One-time event delegation: any current or future .read-more button
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.read-more');
+  if (!btn) return;
+  const prose = btn.closest('.prose');
+  if (prose && !prose.classList.contains('expanded')) {
+    prose.classList.add('expanded');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+});
+
 elForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const year = parseInt(document.getElementById('year').value, 10);
@@ -1293,7 +1339,7 @@ function render(pillars, dobLabel, gender) {
       <div class="dm-hanja hanja">${dm.hanja}</div>
       <h3 class="dm-name">${dm.name} — Day Master</h3>
       <div class="dm-keywords">${dm.keywords}</div>
-      <div class="dm-description">${dm.description}</div>
+      <div class="dm-description prose">${makeCollapsible(dm.description)}</div>
     </div>
 
     <div class="section-card">
@@ -1320,17 +1366,17 @@ function render(pillars, dobLabel, gender) {
 
     <div class="section-card">
       <h3><span class="ico">💞</span>Relational Themes</h3>
-      <div class="prose">${dm.love}</div>
+      <div class="prose">${makeCollapsible(dm.love)}</div>
     </div>
 
     <div class="section-card">
       <h3><span class="ico">💼</span>Vocational Themes</h3>
-      <div class="prose">${dm.career}</div>
+      <div class="prose">${makeCollapsible(dm.career)}</div>
     </div>
 
     <div class="section-card">
       <h3><span class="ico">💰</span>Wealth & Resources</h3>
-      <div class="prose">${dm.wealth}</div>
+      <div class="prose">${makeCollapsible(dm.wealth)}</div>
     </div>
 
     <div class="section-card">
