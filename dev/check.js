@@ -1,23 +1,28 @@
-// Standalone JS check - reads index.html and extracts main script
+// Use vm.Script to get line info
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const re = /<script>([\s\S]*?)<\/script>/g;
-let m, i = 0, found = [];
+let m, code;
 while ((m = re.exec(html)) !== null) {
-  i++;
-  if (m[1].length > 100) found.push({ i, body: m[1] });
+  if (m[1].length > 1000) { code = m[1]; break; }
 }
-console.log('Found', found.length, 'large script blocks');
-// Try parsing the last big one (the main app code)
-const code = found[found.length - 1].body;
-// Use vm to parse
 try {
-  new Function(code);
-  console.log('Main script parses OK');
+  new vm.Script(code);
+  console.log('OK');
 } catch (e) {
-  console.log('Parse error:', e.message);
-  // Find line
+  console.log('Error:', e.message);
+  console.log('Stack:', e.stack);
+  // try to find line
   const lines = code.split('\n');
-  console.log('Total lines:', lines.length);
+  // Look for likely problem tokens near keyword
+  if (e.message.includes("'s'")) {
+    // Find lines with unescaped apostrophes
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].match(/[^\\]'(s|t|re|ve|ll|d|m)\b/)) {
+        console.log('Possible apostrophe issue line ' + (i+1) + ': ' + lines[i].substring(0, 200));
+      }
+    }
+  }
 }
