@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>saju</title>
+    <link>https://korean-saju.pages.dev</link>
+    <description>saju updates</description>
+    <language>en</language>
+    <lastBuildDate>Fri, 19 Jun 2026 16:11:53 GMT</lastBuildDate>
+  <item>
+    <title>About — Four Pillars of Destiny · Saju Tradition in English</title>
+    <link>https://korean-saju.pages.dev//about.html</link>
+    <description>About the Four Pillars of Destiny project: our mission to present the Korean Saju (사주) tradition clearly in English, with full source citations and zero data collection.</description>
+    <guid>https://korean-saju.pages.dev//about.html</guid>
+  </item>
+  <item>
+    <title>Contact — Four Pillars of Destiny</title>
+    <link>https://korean-saju.pages.dev//contact.html</link>
+    <description>Contact the Four Pillars of Destiny project. For feedback, corrections, or general inquiries about the Korean Saju tradition as presented on this site.</description>
+    <guid>https://korean-saju.pages.dev//contact.html</guid>
+  </item>
+  <item>
+    <title>Four Pillars of Destiny — Free Saju (四柱) Chart Calculator in English</title>
+    <link>https://korean-saju.pages.dev//</link>
+    <description>Explore the Korean Four Pillars of Destiny (Saju / 사주) — a 3,000-year-old East Asian tradition mapped into a chart of cosmic symbols. Educational, free, AI-free, and private. No data leaves your browser.</description>
+    <guid>https://korean-saju.pages.dev//</guid>
+  </item>
+  <item>
+    <title>Privacy Policy — Four Pillars of Destiny</title>
+    <link>https://korean-saju.pages.dev//privacy.html</link>
+    <description>Privacy Policy for the Four Pillars of Destiny site. We do not collect, store, or transmit birth data. The calculation runs entirely in your browser.</description>
+    <guid>https://korean-saju.pages.dev//privacy.html</guid>
+  </item>
+  <item>
+    <title>Terms of Service — Four Pillars of Destiny</title>
+    <link>https://korean-saju.pages.dev//terms.html</link>
+    <description>Terms of Service for the Four Pillars of Destiny site. The service is provided for educational and cultural learning. No advice is given.</description>
+    <guid>https://korean-saju.pages.dev//terms.html</guid>
+  </item>
+  </channel>
+</rss>
