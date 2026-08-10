@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+Allow: /research/
 
-Sitemap: https://saju.example.com/sitemap.xml
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://korean-saju.pages.dev/sitemap.xml
